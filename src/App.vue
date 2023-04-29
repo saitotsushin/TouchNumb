@@ -5,7 +5,7 @@
         <v-main>
           <router-view />
         </v-main>
-        <v-footer app>&copy; saitotsushin</v-footer>
+        <v-footer app class="footer">created by saitotsushin</v-footer>
       </v-layout>
   </v-container>
 </template>
@@ -25,5 +25,9 @@
 }
 .container *{
   position: relative;
+}
+.footer{
+  color: #acacac;
+  background-color: transparent;
 }
 </style>
