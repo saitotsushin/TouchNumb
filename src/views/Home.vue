@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import { ref,watch } from 'vue'
+import { ref, watch } from 'vue'
+import TwitterAlignment from '../components/TwitterAlignment.vue';
 
-// const props = defineProps<{
-//   dialog: false
-// }>()
+
 
 const dialog = ref(false);
+
+const name = ref("");
+const time = ref(0);
+
+
+   
 </script>
 
 <template>
@@ -46,8 +51,10 @@ const dialog = ref(false);
             </v-card-actions>
           </v-card>
         </v-dialog>
-        
       </div>  
+    </v-card>
+    <v-card class="Card">
+      <TwitterAlignment/>
     </v-card>
 </template>
 
@@ -63,6 +70,7 @@ const dialog = ref(false);
 .Card{
   background-color: #FFF;
   padding: 2rem;
+  margin-bottom: 1rem;
 }
 .BtnList{
   display: flex;

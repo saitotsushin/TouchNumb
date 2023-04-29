@@ -10,6 +10,8 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@types/firebase": "^3.2.1",
+    "firebase": "^9.21.0",
     "gh-pages": "^5.0.0",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6",
