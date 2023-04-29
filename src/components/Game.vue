@@ -6,7 +6,7 @@ import Timer from '../components/Timer.vue';
 import CountDown from '../components/CountDown.vue';
 import GameFin from '../components/GameFin.vue';
 import GameTimeOut from '../components/GameTimeOut.vue';
-let NowNumber = 1;
+const NowNumber = ref(1);
 interface Item {
   index: number;
   touched: boolean;
@@ -45,14 +45,14 @@ const IsTimeOut = ref(false);
 const ClearTime = ref(0);
 
 const handleNameUpdate = (_index: number) => {
-  if (_index !== NowNumber) {
+  if (_index !== NowNumber.value) {
     return;
   }
   const index = NumberList.findIndex(user => user.index === _index);
   if (index !== -1) {
     const newUser = { ...NumberList[index], touched: true };
     NumberList.splice(index, 1, newUser);
-    NowNumber++;
+    NowNumber.value++;
   }
   if (_index == 16) {
     IsFin.value = true;
@@ -72,12 +72,15 @@ const TimeOut = () => {
 <template>
   <div>
     <CountDown @game-start="GameStart"/>
-    <Timer
-     :isStart="IsStart"
-     :isFin="IsFin"
-     :isTimeOut="IsTimeOut"
-     @game-timeout="TimeOut"
-     @game-cleartime="GameClear"/>  
+    <div class="GameHeader">
+      <div class="NextNumber"><span>NEXT</span><b>{{ NowNumber }}</b></div>
+      <Timer
+        :isStart="IsStart"
+        :isFin="IsFin"
+        :isTimeOut="IsTimeOut"
+        @game-timeout="TimeOut"
+        @game-cleartime="GameClear"/>  
+    </div>
     <div class="PanelList">
       <div v-for="item in NumberList" :key="item.index">
         <TouchPanel :index="item.index" :touched="item.touched" @touch-panel="handleNameUpdate"/>
@@ -89,6 +92,25 @@ const TimeOut = () => {
 </template>
 
 <style scoped>
+.GameHeader{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.NextNumber *{
+  display: inline-block;
+}
+.NextNumber b{
+  font-size: 2.4rem;
+  color: #FFF;
+  font-weight: bold;
+  margin-left: 0.5rem;
+}
+.NextNumber span{
+  writing-mode: vertical-rl;
+  font-size: 0.6rem;
+  color: #FFF;
+}
 .PanelList{
   width: 320px;
   display: flex;

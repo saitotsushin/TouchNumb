@@ -28,7 +28,10 @@ const dialog = ref(false);
               <span class="text-h5">ABOUT</span>
             </v-card-title>
             <v-card-text>
-              aaa
+              1から順番に番号をタップしていき、最後の番号までのタイムを競います。<br/>
+              （「タッチ ザ ナ◯バー」そのままです）<br/>
+              <br/>
+              Vue.jsの勉強のために作成。
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>

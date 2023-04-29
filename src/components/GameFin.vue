@@ -41,13 +41,18 @@ function ChangeTimeFormat(_time:number) {
 
 <style scoped>
 .Title{
-  font-size: 2.0rem;
+  font-size: 1.2rem;
+  line-height: 1.1;
   color: #FFF;
+  margin-bottom: 0.5rem;
 }
 .ClearTime{
-  font-size: 1.8rem;
+  font-size: 2.4rem;
+  line-height: 1.1;
   color: #FFF;
   font-weight: bold;
+  margin-bottom: 2rem;
+  letter-spacing: 0.2rem;
 }
 .box{
   position: absolute;

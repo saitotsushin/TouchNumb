@@ -65,7 +65,7 @@ watch(() => props.isFin, (newValue, oldValue) => {
     <div class="timer">
       <span>{{ seconds_parts1 }}</span>
       <span>{{ seconds_parts2 }}</span>
-      <span>:</span>
+      <span class="CenterColon">:</span>
       <span>{{ milliseconds_parts1 }}</span>
       <span>{{ milliseconds_parts2 }}</span>
     </div>  
@@ -78,7 +78,10 @@ watch(() => props.isFin, (newValue, oldValue) => {
 }
 .timer span{
   display: inline-block;
-  width: 1.2rem;
-  font-size: 1.6rem;
+  width: 1.1rem;
+  font-size: 1.4rem;
+}
+.timer .CenterColon {
+  width: 0.6rem;
 }
 </style>

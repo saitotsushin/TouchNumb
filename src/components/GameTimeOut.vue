@@ -20,7 +20,7 @@ const reloadPage = () => {
 <template>
     <div class="overlay" :class="{ active: isActive }">
       <div class="box">
-        <p>タイムアウトです...</p>
+        <p>Sorry...TimeOut!</p>
         <BtnPageReload/>
       </div>
     </div>  

@@ -18,7 +18,6 @@ const Touched = () => {
 <template>
   <div class="card">
     <v-btn type="button" v-on:click="Touched" :class="{ disable: props.touched }">{{ index }}</v-btn>
-    <!-- <button type="button" v-on:click="Touched" :class="{ disable: props.touched }">{{ props.touched }}</button> -->
   </div>
 </template>
 
