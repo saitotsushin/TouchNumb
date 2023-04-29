@@ -6,9 +6,9 @@ const reloadPage = () => {
 
 <template>
   <div>
-    <v-btn @click="reloadPage()">RETRY</v-btn>
+    <v-btn @click="reloadPage()" color="primary">RETRY</v-btn>
     <div class="BtnTop">
-      <router-link to="/" class="text-decoration-none">TOP</router-link>
+      <router-link to="/" class="text-decoration-none text-orange">TOP</router-link>
     </div>
   </div>
 </template>

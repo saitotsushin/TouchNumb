@@ -12,20 +12,21 @@ const dialog = ref(false);
     <v-card class="Card">
       <div class="Title">Touch<span>Numb</span></div>
       <div class="BtnList">
-        <v-btn to="/game" class="Btn">GAME START</v-btn>
+        
+        <v-btn to="/game" class="Btn" color="primary">GAME START</v-btn>
         <v-dialog
           v-model="dialog"
           width="400"
         >
           <template v-slot:activator="{ props }">
             <a
-              class="text-decoration-none OpenDialogText"
+              class="text-decoration-none OpenDialogText text-black"
               v-bind="props"
             >ABOUT</a>
           </template>
-          <v-card>
-            <v-card-title>
-              <span class="text-h5">ABOUT</span>
+          <v-card class="DiarlogCard">
+            <v-card-title class="text-center">
+              <span class="text-h4">ABOUT</span>
             </v-card-title>
             <v-card-text>
               1から順番に番号をタップしていき、最後の番号までのタイムを競います。<br/>
@@ -36,7 +37,7 @@ const dialog = ref(false);
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn
-                color="green-darken-1"
+                color="orange-darken-1"
                 variant="text" block
                 @click="dialog = false"
               >
@@ -76,5 +77,8 @@ const dialog = ref(false);
 }
 .OpenDialogText:hover{
   cursor: pointer;
+}
+.DiarlogCard{
+  padding: 1.6rem 0rem 0rem 0rem;
 }
 </style>
