@@ -5,6 +5,9 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: process.env.GITHUB_PAGES  // この行を追加
+  ? "TouchNumb"            // この行を追加
+  : "./",                     // この行を追加
   // base: process.env.NODE_ENV === 'production' ? '/github-pages-test/' : './',
   plugins: [vue()],
   // resolve: {
