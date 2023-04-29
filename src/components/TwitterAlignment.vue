@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import IconTwitter from "../assets/icon_twitter.svg";
+import { ref, watch, defineEmits } from 'vue'
+
 const reloadPage = () => {
   location.reload();
 }
@@ -7,7 +10,7 @@ import { initializeApp } from 'firebase/app';
 import firebaseConfig from '../firebase/firebaseConfig';
 
 import { getFirestore, collection, getDocs, Firestore,addDoc } from 'firebase/firestore/lite';
-import { getAuth, signOut, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
+import { getAuth, signOut, signInWithPopup, TwitterAuthProvider,onAuthStateChanged } from "firebase/auth";
 
 const app = initializeApp(firebaseConfig);
 
@@ -20,13 +23,15 @@ async function getCities(db: Firestore) {
   const cityList = citySnapshot.docs.map(doc => doc.data());
   return cityList;
 }
-
+const IsLogin = ref(false);
 const provider = new TwitterAuthProvider();
 const auth = getAuth();
+
+  
 function API_TwitterLogout() {
   signOut(auth).then(() => {
     // Sign-out successful.
-    console.log("LOGOUT OK")
+    IsLogin.value = false; 
   }).catch((error) => {
     // An error happened.
   });
@@ -40,7 +45,8 @@ function API_TwitterAuth(){
     let token, secret;
     if (credential) {
       token = credential.accessToken;
-      secret = credential.secret;    
+      secret = credential.secret;   
+      IsLogin.value = true; 
     }
 
     // The signed-in user info.
@@ -73,8 +79,8 @@ async function sendItem(this: any){
 
 <template>
   <div>
-    <v-btn @click="API_TwitterLogout()">Twitter LOGOUT</v-btn>   
-    <v-btn @click="API_TwitterAuth()">Twitter</v-btn>     
+    <v-btn @click="API_TwitterLogout()" v-if="IsLogin">Twitter LOGOUT</v-btn>   
+    <v-btn @click="API_TwitterAuth()" v-if="!IsLogin"><v-icon><img :src="IconTwitter" class="" alt="twitter" /></v-icon>Twitter</v-btn>     
     <v-btn @click="sendItem()">SEND</v-btn>
   </div>
 </template>

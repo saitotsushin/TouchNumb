@@ -9,8 +9,6 @@ const dialog = ref(false);
 const name = ref("");
 const time = ref(0);
 
-
-   
 </script>
 
 <template>
@@ -53,9 +51,9 @@ const time = ref(0);
         </v-dialog>
       </div>  
     </v-card>
-    <v-card class="Card">
+    <!-- <v-card class="Card">
       <TwitterAlignment/>
-    </v-card>
+    </v-card> -->
 </template>
 
 <style scoped>
