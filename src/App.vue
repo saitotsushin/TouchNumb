@@ -3,7 +3,7 @@
   <v-container class="container">
       <v-layout class="layout">
         <v-main>
-          <router-view />
+          <router-view :key="$route.fullPath"/>
         </v-main>
         <v-footer app class="footer">created by saitotsushin</v-footer>
       </v-layout>

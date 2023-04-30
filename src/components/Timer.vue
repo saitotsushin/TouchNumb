@@ -26,9 +26,20 @@ const TimeOut = () => {
 const ClearTime = () => {
   emit('game-cleartime',timeElapsed);
 }
+function Reflash() {
+  timeElapsed = 0;
+  seconds_parts1.value = "0";
+  seconds_parts2.value = "0";
+  milliseconds_parts1.value = "0";
+  milliseconds_parts2.value = "0";
+}
 function StartGame(){
   const startTime = Date.now();
+  if (intervalId) {
+      clearInterval(intervalId);
+    }
   intervalId = setInterval(() => {
+
     timeElapsed = Date.now() - startTime
     // cleartime = timeElapsed;
     const seconds = Math.floor((timeElapsed / 1000) % 60)
@@ -42,7 +53,7 @@ function StartGame(){
     milliseconds_parts1.value = milliseconds_parts[0];
     milliseconds_parts2.value = milliseconds_parts[1];
 
-    if (timeElapsed > 30000) {
+    if (timeElapsed > 30000) {//30000
       clearInterval(intervalId);
       TimeOut();
     }
@@ -51,12 +62,15 @@ function StartGame(){
 watch(() => props.isStart, (newValue, oldValue) => {
   if (newValue == true) {
     StartGame();
+  } else {
+    Reflash();
   }
 });
 watch(() => props.isFin, (newValue, oldValue) => {
   if (newValue == true) {
     clearInterval(intervalId);
     ClearTime();
+    Reflash();
   }
 });
 </script>

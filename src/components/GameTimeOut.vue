@@ -12,8 +12,12 @@ watch(() => props.isTimeOut, (newValue, oldValue) => {
     isActive.value = true;
   }
 });
-const reloadPage = () => {
-  location.reload();
+const emit = defineEmits([
+  'game-retry'
+]);
+const GameRetry = () => {
+  isActive.value = false;
+  emit('game-retry',true);
 }
 </script>
 
@@ -21,7 +25,7 @@ const reloadPage = () => {
     <div class="overlay" :class="{ active: isActive }">
       <div class="box">
         <p>Sorry...TimeOut!</p>
-        <BtnPageReload/>
+        <BtnPageReload @game-retry="GameRetry"/>
       </div>
     </div>  
 </template>

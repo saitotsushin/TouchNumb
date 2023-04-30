@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref,defineEmits } from 'vue'
+import { ref,watch,defineEmits } from 'vue'
 
-// const props = defineProps<{
-//   isStart: Boolean
-// }>()
+const props = defineProps<{
+  isCountDown: Boolean,
+  isRetry: Boolean
+}>()
 
 const emit = defineEmits([
   'game-start'
@@ -12,23 +13,49 @@ const GameStart = () => {
   emit('game-start',true);
 }
 
-let timeElapsed = 2
+let timeElapsed = 2;
 const seconds = ref(3);
 const isHidden = ref(false);
 
 let intervalId: any = null;
-intervalId = setInterval(() => {
-  timeElapsed = timeElapsed - 1
-  console.log(timeElapsed);
-  seconds.value = Math.floor(timeElapsed % 60) + 1;
-  
-  // let nokori = 3000 - timeElapsed;
-  if (timeElapsed < 0) {
+
+const CountDownStart = () => {
+  if (intervalId) {
     clearInterval(intervalId);
-    isHidden.value = true;
-    GameStart();
+  }  
+  intervalId = setInterval(() => {
+    timeElapsed = timeElapsed - 1;
+    seconds.value = Math.floor(timeElapsed % 60) + 1;
+    if (timeElapsed < 0) {
+      clearInterval(intervalId);
+      isHidden.value = true;
+      GameStart();
+    }
+  }, 1000);
+}
+CountDownStart();
+
+const Reflash = () => {
+  intervalId = null;
+  clearInterval(intervalId);
+  timeElapsed = 2;
+  seconds.value = 3;
+  isHidden.value = false;
+}
+watch(() => props.isCountDown, (newValue, oldValue) => {
+  if (newValue == true) {
+    CountDownStart();
+  } else {
   }
-}, 1000);
+});
+watch(() => props.isRetry, (newValue, oldValue) => {
+  if (newValue == true) {
+    Reflash();
+    CountDownStart();
+  } else {
+  }
+});
+
 
 </script>
 

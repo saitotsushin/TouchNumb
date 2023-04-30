@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref,reactive, computed,defineEmits } from 'vue'
+import { defineEmits } from 'vue'
 
 const props = defineProps<{
   index: Number,

@@ -1,12 +1,19 @@
 <script setup lang="ts">
 import { reactive,ref } from 'vue';
-// import Vue from 'vue';
 import TouchPanel from '../components/TouchPanel.vue';
 import Timer from '../components/Timer.vue';
 import CountDown from '../components/CountDown.vue';
 import GameFin from '../components/GameFin.vue';
 import GameTimeOut from '../components/GameTimeOut.vue';
+
 const NowNumber = ref(1);
+const IsStart = ref(false);
+const IsCountDown = ref(false);
+const IsRetry = ref(false);
+const IsFin = ref(false);
+const IsTimeOut = ref(false);
+const ClearTime = ref(0);
+
 interface Item {
   index: number;
   touched: boolean;
@@ -30,21 +37,44 @@ const NumberList = reactive<Item[]>([
   { index: 16, touched: false }
 ]);
 
-const result = [...NumberList]; // 元の配列をコピー
-for (let i = result.length - 1; i > 0; i--) {
-  const j = Math.floor(Math.random() * (i + 1)); // 0 〜 i までのランダムな整数
-  [result[i], result[j]] = [result[j], result[i]]; // 要素を交換
+const GameStart = () => {
+  IsCountDown.value = false;
+  IsStart.value = true;
+  IsRetry.value = false;
+  const result = [...NumberList]; // 元の配列をコピー
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1)); // 0 〜 i までのランダムな整数
+    [result[i], result[j]] = [result[j], result[i]]; // 要素を交換
+  }
+  // リアクティブオブジェクトを更新
+  NumberList.splice(0, NumberList.length, ...result);
+
 }
-// リアクティブオブジェクトを更新
-NumberList.splice(0, NumberList.length, ...result);
-
-// const intervalId = ref();
-const IsFin = ref(false);
-const IsStart = ref(false);
-const IsTimeOut = ref(false);
-const ClearTime = ref(0);
-
-const handleNameUpdate = (_index: number) => {
+const GameRetry = () => {
+  IsStart.value = false;
+  IsFin.value = false;
+  IsCountDown.value = true;
+  IsTimeOut.value = false;
+  ClearTime.value = 0;
+  NowNumber.value = 1;
+  IsRetry.value = true;
+  NumberList.forEach(element => {
+    element.touched = false;    
+  });
+  CountDownStart();
+}
+const CountDownStart = () => {
+  IsCountDown.value = true;
+}
+const GameClear = (_time: number) => {
+  ClearTime.value = _time;
+  IsRetry.value = false;
+}
+const TimeOut = () => {
+  IsTimeOut.value = true;
+  IsRetry.value = false;
+}
+const PanelCountUp = (_index: number) => {
   if (_index !== NowNumber.value) {
     return;
   }
@@ -59,19 +89,13 @@ const handleNameUpdate = (_index: number) => {
   }
 }
 
-const GameStart = () => {
-  IsStart.value = true;
-}
-const GameClear = (_time: number) => {
-  ClearTime.value = _time;
-}
-const TimeOut = () => {
-  IsTimeOut.value = true;
-}
 </script>
 <template>
   <div>
-    <CountDown @game-start="GameStart"/>
+    <CountDown 
+      @game-start="GameStart"
+      :isCountDown="IsCountDown"
+      :isRetry="IsRetry"/>
     <div class="GameHeader">
       <div class="NextNumber"><span>NEXT</span><b>{{ NowNumber }}</b></div>
       <Timer
@@ -83,11 +107,19 @@ const TimeOut = () => {
     </div>
     <div class="PanelList">
       <div v-for="item in NumberList" :key="item.index">
-        <TouchPanel :index="item.index" :touched="item.touched" @touch-panel="handleNameUpdate"/>
+        <TouchPanel
+          :index="item.index"
+          :touched="item.touched"
+          @touch-panel="PanelCountUp"/>
       </div>  
     </div>
-    <GameFin :isFin="IsFin" :clearTime="ClearTime"/>
-    <GameTimeOut :isTimeOut="IsTimeOut"/>
+    <GameFin 
+      :isFin="IsFin" 
+      :clearTime="ClearTime" 
+      @game-retry="GameRetry"/>
+    <GameTimeOut 
+      :isTimeOut="IsTimeOut"
+      @game-retry="GameRetry"/>
   </div>
 </template>
 

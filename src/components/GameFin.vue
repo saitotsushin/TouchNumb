@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref,watch } from 'vue'
+import { ref,watch,defineEmits } from 'vue'
 import BtnPageReload from './BtnPageReload.vue';
 
 const props = defineProps<{
@@ -9,15 +9,21 @@ const props = defineProps<{
 
 const isActive = ref(false);
 const setClearTime = ref("00:00");
+
 watch(() => props.isFin, (newValue, oldValue) => {
   if (newValue == true) {
     isActive.value = true;
-    console.log(props.clearTime);
-    // console.log(clearTime.value);
     setClearTime.value = ChangeTimeFormat(props.clearTime);
   }
 });
-
+const emit = defineEmits([
+  'game-retry'
+]);
+const GameRetry = () => {
+  setClearTime.value = "00:00";
+  isActive.value = false;
+  emit('game-retry',true);
+}
 function ChangeTimeFormat(_time:number) {
   const seconds = Math.floor((_time / 1000) % 60)
   const milliseconds = _time % 100
@@ -34,7 +40,7 @@ function ChangeTimeFormat(_time:number) {
       <div class="box">
         <div class="Title">ClearTime</div>
         <div class="ClearTime">{{ ChangeTimeFormat(clearTime) }}</div>
-        <BtnPageReload/>
+        <BtnPageReload @game-retry="GameRetry"/>
       </div>
     </div>  
 </template>
@@ -63,7 +69,7 @@ function ChangeTimeFormat(_time:number) {
 .overlay{
   width: 100%;
   height: 100vh;
-  z-index: 10;
+  z-index: 3000;
   position: fixed;
   top: 0;
   left: 0;
