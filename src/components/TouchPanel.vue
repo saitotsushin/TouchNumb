@@ -16,8 +16,8 @@ const Touched = () => {
 </script>
 
 <template>
-  <div class="card">
-    <v-btn type="button" v-on:click="Touched" :class="{ disable: props.touched }">{{ index }}</v-btn>
+  <div class="Card">
+    <v-btn type="button" v-on:click="Touched" :class="{ disable: props.touched }"><span class="CardNumber">{{ index }}</span></v-btn>
   </div>
 </template>
 
@@ -25,24 +25,25 @@ const Touched = () => {
 .read-the-docs {
   color: #333;
 }
-.card{
-    width: 80px;
-    height: 80px;
-    box-sizing: border-box;
-    padding: 4px;
-    margin: 0;
-    display: flex;
+.Card{
+  padding: 0;
+  width: 100%;
 }
-.card button{
-    height: 100%;
+.Card button{
     width: 100%;
     margin: 0;
-    padding: 0;
     background-color: #f4ad21;
     font-size: 2rem;
     font-weight: bold;
+    padding-top: 100%;
 }
 .card .disable{
   opacity: 0.1;
+}
+.CardNumber {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

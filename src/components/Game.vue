@@ -93,25 +93,27 @@ const PanelCountUp = (_index: number) => {
 <template>
   <div>
     <CountDown 
-      @game-start="GameStart"
-      :isCountDown="IsCountDown"
-      :isRetry="IsRetry"/>
-    <div class="GameHeader">
-      <div class="NextNumber"><span>NEXT</span><b>{{ NowNumber }}</b></div>
-      <Timer
-        :isStart="IsStart"
-        :isFin="IsFin"
-        :isTimeOut="IsTimeOut"
-        @game-timeout="TimeOut"
-        @game-cleartime="GameClear"/>  
-    </div>
-    <div class="PanelList">
-      <div v-for="item in NumberList" :key="item.index">
-        <TouchPanel
-          :index="item.index"
-          :touched="item.touched"
-          @touch-panel="PanelCountUp"/>
-      </div>  
+        @game-start="GameStart"
+        :isCountDown="IsCountDown"
+        :isRetry="IsRetry"/>
+    <div class="MainGame">
+      <div class="GameHeader">
+        <div class="NextNumber"><span>NEXT</span><b>{{ NowNumber }}</b></div>
+        <Timer
+          :isStart="IsStart"
+          :isFin="IsFin"
+          :isTimeOut="IsTimeOut"
+          @game-timeout="TimeOut"
+          @game-cleartime="GameClear"/>  
+      </div>
+      <div class="PanelList">
+        <div v-for="item in NumberList" :key="item.index" class="CardItem">
+          <TouchPanel
+            :index="item.index"
+            :touched="item.touched"
+            @touch-panel="PanelCountUp"/>
+        </div>  
+      </div>
     </div>
     <GameFin 
       :isFin="IsFin" 
@@ -124,6 +126,10 @@ const PanelCountUp = (_index: number) => {
 </template>
 
 <style scoped>
+.MainGame{
+  /* z-index: 5000; */
+  position: relative;
+}
 .GameHeader{
   display: flex;
   justify-content: space-between;
@@ -144,8 +150,16 @@ const PanelCountUp = (_index: number) => {
   color: #FFF;
 }
 .PanelList{
-  width: 320px;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
+  max-width: 320px;
+}
+.CardItem{
+    width: calc(100% / 4);
+    box-sizing: border-box;
+    padding: 4px;
+    margin: 0;
+    display: flex;
 }
 </style>
