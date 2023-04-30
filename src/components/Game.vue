@@ -135,6 +135,10 @@ const PanelCountUp = (_index: number) => {
   justify-content: space-between;
   align-items: center;
 }
+.NextNumber{
+  width: 32%;
+  display: flex;
+}
 .NextNumber *{
   display: inline-block;
 }
