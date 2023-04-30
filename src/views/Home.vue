@@ -82,6 +82,7 @@ const time = ref(0);
 .BtnStart{
   padding: 1rem;
   height: auto;
+  display: block;
 }
 .OpenDialogText{
   font-size: 0.75rem;
