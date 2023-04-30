@@ -16,7 +16,7 @@ const time = ref(0);
       <div class="Title">Touch<span>Numb</span></div>
       <div class="BtnList">
         
-        <v-btn to="/game" class="Btn" color="primary">GAME START</v-btn>
+        <v-btn to="/game" class="Btn BtnStart" color="primary">GAME START</v-btn>
         <v-dialog
           v-model="dialog"
           width="400"
@@ -59,8 +59,9 @@ const time = ref(0);
 <style scoped>
 .Title{
   font-weight: bold;
-  margin-bottom: 1rem;
-  font-size: 2rem;
+  margin-bottom: 1.6rem;
+  font-size: 2.4rem;
+  letter-spacing: 0.1rem;
 }
 .Title span{
   color:#f4ad21;
@@ -76,7 +77,11 @@ const time = ref(0);
   flex-direction: column;
 }
 .BtnList .Btn{
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+.BtnStart{
+  padding: 1rem;
+  height: auto;
 }
 .OpenDialogText{
   font-size: 0.75rem;
